@@ -72,7 +72,6 @@ const userController = {
           return res.status(404).json({ message: 'No user found with this id' });
         }
 
-        // BONUS: get ids of user's `thoughts` and delete them all
         return Thought.deleteMany({ _id: { $in: dbUserData.thoughts } });
       })
       .then(() => {
@@ -83,7 +82,6 @@ const userController = {
         res.status(500).json(err);
       });
   },
-
   // add friend to friend list
   addFriend(req, res) {
     User.findOneAndUpdate({ _id: req.params.userId }, { $addToSet: { friends: req.params.friendId } }, { new: true })

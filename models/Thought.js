@@ -22,7 +22,7 @@ const thoughtSchema = new Schema(
     },
     {
          toJSON: {
-          virtuals: true,
+          getters: true,
         },
         id: false,
     }
@@ -49,7 +49,13 @@ const reactionSchema = new Schema(
         default: Date.now,
         get: (Date) => timeSince(Date)
     }
-}
+},
+{
+    toJSON: {
+      getters: true
+    },
+    id: false
+  }
 );
 
 reactionSchema.virtual('reactionCount').get(function () {
@@ -57,4 +63,5 @@ reactionSchema.virtual('reactionCount').get(function () {
 });
 
 const Thought = model('Thought', thoughtSchema);
-module.exports = Thought;
+const Reaction = model('Reaction', reactionSchema);
+module.exports = (Thought, Reaction);
